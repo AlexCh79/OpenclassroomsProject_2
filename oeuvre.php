@@ -1,11 +1,18 @@
 <?php
     require 'header.php';
-    require 'oeuvres.php';
+    require_once 'bdd.php';
 
     // Si l'URL ne contient pas d'id, on redirige sur la page d'accueil
     if(empty($_GET['id'])) {
         header('Location: index.php');
     }
+
+    //Préparation de la requête SQL et récupération de l'oeuvre depuis la base de données
+    $oeuvres = connexion();
+    $oeuvres = $oeuvres->prepare('SELECT * FROM oeuvres WHERE id = :id');
+    $oeuvres->execute(
+        ['id'=>$_GET['id']]);
+    $oeuvres = $oeuvres->fetchAll();
 
     $oeuvre = null;
 
