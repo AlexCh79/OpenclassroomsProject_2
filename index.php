@@ -1,7 +1,13 @@
 <?php
     require 'header.php';
-    require 'oeuvres.php';
+    require_once 'bdd.php';
+
+    $oeuvres = connexion();
+    $oeuvres = $oeuvres->prepare('SELECT * FROM oeuvres');
+    $oeuvres->execute();
+    $oeuvres = $oeuvres->fetchAll();
 ?>
+
 <div id="liste-oeuvres">
     <?php foreach($oeuvres as $oeuvre): ?>
         <article class="oeuvre">
